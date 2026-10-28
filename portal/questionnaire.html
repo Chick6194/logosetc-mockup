@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Questionnaire | Logos Etc Artwork Portal (Demo)</title><link rel="stylesheet" href="style.css?v=20261028e"></head><body>
+<div class="demo">Clickable demo: nothing is uploaded, charged or sent. Data stays in this browser.</div>
+<header><div class="nav"><a class="brand" href="index.html"><img src="img/logo.png?v=20261028e" srcset="img/logo.png?v=20261028e 1x, img/logo@2x.png?v=20261028e 2x" alt="Logos Etc" width="48" height="48"><span>Logos Etc Artwork</span></a><a class="l" href="questionnaire.html">Get started</a><a class="l" href="dashboard.html">Dashboard</a><a class="l" id="signin" href="dashboard.html">Sign in</a></div></header>
+<main><div class="card" style="max-width:640px;margin:auto"><p class="mut" id="stp">Step 1 of 4</p><form id="q">
+<div class="s" data-s="1"><h2>What do you need?</h2><div class="opts">
+<label><input type="radio" name="need" value="artwork" checked> Artwork services (vector / digitizing)</label>
+<label><input type="radio" name="need" value="apparel"> Apparel only</label>
+<label><input type="radio" name="need" value="both"> Both artwork and apparel</label>
+<label><input type="radio" name="need" value="store"> My own web store</label></div></div>
+<div class="s" data-s="2" hidden><h2>Product type</h2><select name="product"><option>T-shirts</option><option>Hats / caps</option><option>Polos</option><option>Jackets</option><option>Bags</option><option>Not sure yet</option></select>
+<label>Quantity</label><select name="qty"><option>1–11</option><option>12–47</option><option>48–143</option><option>144+</option></select></div>
+<div class="s" data-s="3" hidden><h2>Deadline</h2><input type="date" name="deadline"><p class="mut">Leave blank if flexible.</p></div>
+<div class="s" data-s="4" hidden><h2>About you</h2><label>Name</label><input name="name" required value="Demo Customer"><label>Email</label><input type="email" name="email" required value="demo@example.com"><label>Company (optional)</label><input name="company"></div>
+<div style="display:flex;gap:10px;margin-top:18px"><button type="button" class="btn o" id="bk" hidden>Back</button><button type="button" class="btn" id="nx">Next</button></div></form>
+<div id="ap" hidden><h2>Apparel is in our InkSoft store</h2><p>Browse products, see prices and design your apparel in our online store. Your answers are saved here if you need artwork later.</p><a class="btn" href="https://www.logosetconline.com/Logos_Etc/shop/home">Go to the apparel store</a> <a class="btn o" href="index.html">Back home</a></div></div></main>
+<footer>Logos Etc · Milpitas, CA · Demo of the future logosetcetera.com</footer><script src="app.js?v=20261028e"></script><script>let s=1;const f=document.getElementById("q"),show=()=>{document.querySelectorAll(".s").forEach(e=>e.hidden=e.dataset.s!=s);stp.textContent="Step "+s+" of 4";bk.hidden=s==1;nx.textContent=s==4?"Continue":"Next"};
+bk.onclick=()=>{s--;show()};nx.onclick=()=>{if(s<4){s++;show();return}if(!f.reportValidity())return;const d=Object.fromEntries(new FormData(f));S.set("answers",d);S.set("client",{name:d.name,email:d.email,company:d.company,since:new Date().toLocaleDateString()});
+if(d.need=="apparel"){f.hidden=true;stp.hidden=true;ap.hidden=false}else location="upload.html"};show();</script></body></html>
