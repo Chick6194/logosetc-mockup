@@ -31,3 +31,4 @@ footer{background:var(--dark);color:#aab6c7;text-align:center;padding:20px;font-
 .freebar:hover{background:#d9b43a}
 .capq{background:#fbf4dc;border:2px solid #C9A227;border-radius:10px;padding:12px 14px;margin:10px 0}.capq label{display:block;margin-top:6px}
 .jq{width:100%;border-collapse:collapse}.jq th,.jq td{text-align:left;padding:10px 8px;border-bottom:1px solid #e3e8f2;vertical-align:middle}.jq th{color:#13294B;font-size:.85rem;text-transform:uppercase}@media(max-width:700px){.jq,.jq tr,.jq td{display:block}.jq tr:first-child{display:none}.jq tr{border-bottom:2px solid #C9A227;padding:8px 0}.jq td{border:0;padding:4px 0}}
+.capyes{display:inline-block;background:#C9A227;color:#0B1F3A;font-weight:800;border-radius:999px;padding:3px 12px;margin:4px 0;font-size:.9rem}.capno{display:inline-block;color:#667;font-size:.85rem;margin:4px 0}
