@@ -2,3 +2,5 @@ const S={get:k=>JSON.parse(localStorage.getItem('le_'+k)||'null'),set:(k,v)=>loc
 const SV={vector:['Vector artwork',15],digitizing:['Embroidery digitizing',35],bundle:['Bundle (vector + digitizing + free cap logo)',50]};
 (()=>{const c=S.get('client'),a=document.getElementById('signin');if(c&&a)a.textContent=c.name.split(' ')[0]+' · Account';})();
 if(location.search.includes('demo')&&!S.get('orders')){S.set('client',{name:'Demo Customer',email:'demo@example.com',company:'Milpitas Little League',since:new Date().toLocaleDateString()});S.set('orders',[{id:'LE-1002',svc:'bundle',cap:'yes',file:'example-original.jpg',img:null,notes:'Navy and gold',status:4,date:new Date().toLocaleDateString()},{id:'LE-1001',svc:'vector',file:'example-original.jpg',img:null,notes:'',status:1,date:new Date().toLocaleDateString()}]);}
+
+if(location.search.includes('demo')){const o=S.get('orders')||[];if(!o.some(x=>x.id=='LE-1003')){o.unshift({id:'LE-1003',svc:'bundle',cap:'yes',client:'Valley Water Team',file:'valley-water-logo.png',img:null,notes:'Cap front, 2 colors',status:2,date:new Date().toLocaleDateString()});S.set('orders',o);}}

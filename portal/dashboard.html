@@ -1,9 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard | Logos Etc Artwork Portal (Demo)</title><link rel="stylesheet" href="style.css?v=20261028g"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard | Logos Etc Artwork Portal (Demo)</title><link rel="stylesheet" href="style.css?v=20261028h"></head><body>
 <div class="demo">Clickable demo: nothing is uploaded, charged or sent. Data stays in this browser.</div>
 <header><div class="nav"><a class="brand" href="index.html"><img src="img/logo.png?v=20261028e" srcset="img/logo.png?v=20261028e 1x, img/logo@2x.png?v=20261028e 2x" alt="Logos Etc" width="48" height="48"><span>Logos Etc Artwork</span></a><a class="l" href="questionnaire.html">Get started</a><a class="l" href="dashboard.html">Dashboard</a><a class="l" id="signin" href="dashboard.html">Sign in</a></div></header>
-<main><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2 id="t">My artwork orders</h2><div><button class="btn o" id="adm">Admin view</button> <a class="btn" href="upload.html">New upload</a></div></div>
-<div id="acct" class="card" hidden></div><div id="list"></div></main>
-<footer>Logos Etc · Milpitas, CA · Demo of the future logosetcetera.com</footer><script src="app.js?v=20261028g"></script><script>const ST=["In review","Quoted","Paid","In progress","Complete"];let admin=false;
+<main><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2 id="t">My artwork orders</h2><div><button class="btn o" id="adm">Admin view</button> <button class="btn o" id="jq">John's queue</button> <a class="btn" href="upload.html">New upload</a></div></div>
+<div id="queue" class="card" hidden></div><div id="acct" class="card" hidden></div><div id="list"></div></main>
+<footer>Logos Etc · Milpitas, CA · Demo of the future logosetcetera.com</footer><script src="app.js?v=20261028h"></script><script>const ST=["In review","Quoted","Paid","In progress","Complete"];let admin=false;
 function draw(){const o=S.get("orders")||[],c=S.get("client")||{name:"Guest",email:"-"};t.textContent=admin?"Admin · all orders":"My artwork orders";adm.textContent=admin?"Client view":"Admin view";
 acct.hidden=!admin;acct.innerHTML="<h3>Client account</h3><b>"+c.name+"</b> · "+c.email+(c.company?" · "+c.company:"")+"<br><span class=mut>Client since "+(c.since||"-")+" · "+o.length+" order(s)</span>";
 if(!o.length){list.innerHTML="<div class=card>No orders yet. <a href=upload.html>Upload your first logo</a>.</div>";return}
@@ -14,4 +14,11 @@ if(st==4)act="<h3>Before and after</h3><div class=ba><figure><img src=\""+(x.img
 return "<div class=card><div class=ord><div><img class=th src=\""+(x.img||"img/example-original.jpg?v=20261028e")+"\" alt=\"original\"><div class=mut style=font-size:.8rem>Original: "+x.file+"</div></div><div><h3>"+x.id+" · "+n+(admin?" <span class=tag>Client: "+(S.get("client")||{}).name+"</span>":"")+"</h3>"+(x.svc=="bundle"?(x.cap=="no"?"<div class=capno>Free cap logo: declined</div>":"<div class=capyes>&#9733; Free cap logo: included</div>"):"")+"<span class=mut>Submitted "+x.date+(x.notes?" · Notes: "+x.notes:"")+"</span><div class=pipe>"+ST.map((s,j)=>"<span class="+(j<st?"done":j==st?"cur":"")+">"+s+"</span>").join("")+"</div>"+act+
 (st<4?"<button class=\"btn o\" onclick=go("+i+")>Simulate next step ▸</button>":"")+(admin?" <button class=\"btn o\" onclick=del("+i+")>Delete</button>":"")+"</div></div></div>"}).join("")}
 function go(i){const o=S.get("orders");o[i].status=Math.min(4,o[i].status+1);S.set("orders",o);draw()}function del(i){const o=S.get("orders");o.splice(i,1);S.set("orders",o);draw()}
-adm.onclick=()=>{admin=!admin;draw()};draw();</script></body></html>
+let jqOn=false;const QS={0:"In review",2:"Waiting on designer",3:"In progress"};
+function capB(x){return x.svc=="bundle"?(x.cap=="no"?"<span class=capno>Cap logo: declined</span>":"<span class=capyes>&#9733; Cap logo: included</span>"):"<span class=mut>-</span>"}
+function drawQ(){const o=S.get("orders")||[],c=S.get("client")||{name:"Guest"};const r=o.map((x,i)=>[x,i]).filter(([x])=>x.status in QS);
+queue.hidden=!jqOn;list.hidden=jqOn;acct.hidden=jqOn||!admin;if(!jqOn)return;t.textContent="John's queue · waiting on the designer";
+queue.innerHTML=r.length?"<table class=jq><tr><th>Order</th><th>Customer</th><th>Service</th><th>Free cap logo</th><th>Status</th><th></th></tr>"+r.map(([x,i])=>"<tr><td><b>"+x.id+"</b></td><td>"+(x.client||c.name)+"</td><td>"+SV[x.svc][0].replace(/ \(.*/,"")+"</td><td>"+capB(x)+"</td><td><span class=tag>"+QS[x.status]+"</span></td><td><a class=\"btn o\" download href=\""+(x.img||"img/example-original.jpg")+"\">Download original</a> <button class=btn onclick=done("+i+")>Upload fixed artwork &#10003;</button></td></tr>").join("")+"</table>":"Nothing waiting on John right now.";}
+function done(i){const o=S.get("orders");o[i].status=4;S.set("orders",o);drawQ();draw()}
+jq.onclick=()=>{jqOn=!jqOn;jq.textContent=jqOn?"Back to orders":"John's queue";if(!jqOn)draw();drawQ()};
+adm.onclick=()=>{admin=!admin;jqOn=false;jq.textContent="John's queue";draw();drawQ()};draw();</script></body></html>
