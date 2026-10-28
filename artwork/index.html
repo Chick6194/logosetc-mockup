@@ -28,13 +28,17 @@ footer{text-align:center;color:var(--mut);font-size:.85rem;padding:30px}
 </style></head><body>
 <div class="demo">DEMO MOCKUP — not a real site. No real accounts, uploads, or payments. All data is example data.</div>
 <header><div class="nav"><a class="logo" href="#" onclick="go('dash')">Logos <span>Etc</span> <small style="font-size:.6em;font-weight:600;color:#cfd8e3">Artwork</small></a>
-<nav id="mainnav" class="hide"><a class="l" onclick="go('dash')">Dashboard</a><a class="l" onclick="go('upload')">New artwork</a><a class="l" onclick="go('files')">Finished files</a><a class="l" onclick="go('admin')">Admin (demo)</a></nav>
+<nav id="mainnav" class="hide"><a class="l" onclick="go('dash')">Dashboard</a><a class="l" onclick="go('upload')">New artwork</a><a class="l" onclick="go('files')">Finished files</a><a class="l" onclick="go('account')">My account</a><a class="l" onclick="go('admin')">Admin (demo)</a></nav>
 <a class="l hide" id="signout" style="color:#fff;cursor:pointer" onclick="signOut()">Sign out</a></div></header>
 <main id="app"></main>
 <footer>Logos Etc · 192 S Hillview Dr, Milpitas, CA · Mockup for review only</footer>
 <script>
 const PRICES={vector:15,emb:35,bundle:50};
 const NAMES={vector:'Vector artwork (AI/EPS/SVG/PDF)',emb:'Embroidery digitizing (EMB)',bundle:'Bundle: vector + EMB, free cap logo'};
+const CL={'Example: Maria Lopez':{company:'Sample Bakery Co.',email:'maria@example.com',phone:'(555) 010-1001',ship:'100 Example St, Sampletown, CA 95000',bill:'Same as shipping'},
+'Example: Jordan Lee':{company:'Sample Softball League',email:'jordan@example.com',phone:'(555) 010-1002',ship:'200 Demo Ave, Sampletown, CA 95000',bill:'PO Box 12, Sampletown, CA 95000'},
+'Example: Priya Patel':{company:'Sample Realty Group',email:'priya@example.com',phone:'(555) 010-1003',ship:'300 Mock Blvd, Sampletown, CA 95000',bill:'Same as shipping'},
+'Example: Sam Carter':{company:'Sample Fitness Studio',email:'sam@example.com',phone:'(555) 010-1004',ship:'400 Test Rd, Sampletown, CA 95000',bill:'Same as shipping'}};
 let S={user:null,sel:'vector',subs:[
  {id:'A-1042',client:'Example: Maria Lopez',company:'Sample Bakery Co.',file:'example-bakery-logo.png',type:'emb',size:'3.5" wide',place:'Left chest',notes:'Example: match navy thread',status:'quote',price:35,date:'Oct 26'},
  {id:'A-1039',client:'Example: Jordan Lee',company:'Sample Softball League',file:'example-softball-team.jpg',type:'vector',size:'10" wide',place:'Full back',notes:'Example',status:'review',price:null,date:'Oct 27'},
@@ -44,13 +48,23 @@ const TAG={review:['Under review','t-rev'],quote:['Quote ready','t-q'],nocharge:
 const $=h=>document.getElementById('app').innerHTML=h;
 const tag=s=>`<span class="tag ${TAG[s][1]}">${TAG[s][0]}</span>`;
 const money=s=>s.price===null?'—':s.price===0?'$0 (no charge)':'$'+s.price;
-function go(v,a){if(!S.user&&v!=='signin'&&v!=='admin'){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
+function go(v,a){if(!S.user&&!['signin','admin','client'].includes(v)){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
+function mkUser(c){const g=i=>(document.getElementById(i)||{}).value;S.user=g('nm')||'Example: Sample Customer';if(!CL[S.user])CL[S.user]={company:c?g('co'):'Example Company LLC',email:g('em'),phone:c?g('ph'):'(555) 010-0000',ship:c?g('sh'):'123 Example St, Sampletown, CA 95000',bill:c?g('bi'):'Same as shipping'};go('dash')}
+function saveAcct(){const c=CL[S.user];['company','email','phone','ship','bill'].forEach(k=>c[k]=document.getElementById('a_'+k).value);const n=document.getElementById('a_name').value;if(n!==S.user){CL[n]=c;S.subs.forEach(x=>{if(x.client===S.user)x.client=n});S.user=n}S.subs.forEach(x=>{if(x.client===S.user)x.company=c.company});document.getElementById('sv').textContent='Saved (demo only)'}
 function signOut(){S.user=null;go('signin')}
 const V={
-signin(){$(`<div class="card" style="max-width:460px;margin:30px auto"><h1>Sign in</h1><p style="color:var(--mut)">Your uploads, quotes and finished files in one place.</p>
-<div class="note"><b>Demo only.</b> Don't type a real password — any name works and nothing is saved.</div>
-<label>Name</label><input id="nm" value="Sample Customer"><label>Email</label><input value="sample@example.com"><label>Password</label><input type="password" value="demo" placeholder="(demo — leave as is)">
-<div class="row" style="margin-top:18px"><button class="btn n" onclick="S.user=document.getElementById('nm').value||'Sample Customer';go('dash')">Sign in</button><button class="btn o" onclick="S.user=document.getElementById('nm').value||'Sample Customer';go('dash')">Create account</button></div></div>`)},
+signin(a){const F=(id,l,v)=>`<label>${l}</label><input id="${id}" value="${v}">`;$(`<div class="card" style="max-width:520px;margin:30px auto"><h1>Sign in or create account</h1><p style="color:var(--mut)">Your uploads, quotes and finished files in one place.</p>
+<div class="note"><b>Demo only.</b> Don't type real information or a real password — example values are filled in and nothing is saved.</div>
+${F('nm','Name','Example: Sample Customer')}${F('em','Email','sample@example.com')}<label>Password</label><input type="password" value="demo">
+<div class="row" style="margin-top:18px"><button class="btn n" onclick="mkUser(0)">Sign in</button><a href="#" onclick="document.getElementById('ca').classList.toggle('hide');return false">New here? Create an account ▾</a></div>
+<div id="ca" class="${a?'':'hide'}"><hr style="margin:20px 0;border:0;border-top:1px solid #eee"><h3>Create account</h3>${F('co','Company','Example Company LLC')}${F('ph','Phone','(555) 010-0000')}${F('sh','Shipping address','123 Example St, Sampletown, CA 95000')}${F('bi','Billing address','Same as shipping')}
+<button class="btn" style="margin-top:16px" onclick="mkUser(1)">Create account</button></div></div>`)},
+account(){const c=CL[S.user];$(`<div class="card" style="max-width:640px"><h1>My account</h1><p class="ex">Demo — changes are not saved anywhere</p>
+${[['name','Name',S.user],['company','Company',c.company],['email','Email',c.email],['phone','Phone',c.phone],['ship','Shipping address',c.ship],['bill','Billing address',c.bill]].map(([k,l,v])=>`<label>${l}</label><input id="a_${k}" value="${v}">`).join('')}
+<div class="row" style="margin-top:16px"><button class="btn n" onclick="saveAcct()">Save changes</button><span id="sv" class="ex"></span></div></div>`)},
+client(n){n=decodeURIComponent(n);const c=CL[n]||{};const L=S.subs.filter(x=>x.client===n);$(`<div class="card"><p><a href="#" onclick="go('admin');return false">← All submissions</a></p><h1>${n}</h1><p style="font-size:1.1rem;margin-top:-6px">${c.company||''}</p><p class="ex">Demo admin view · example data</p>
+<div class="two"><table class="sum"><tr><td>Email</td><td>${c.email||'—'}</td></tr><tr><td>Phone</td><td>${c.phone||'—'}</td></tr></table><table class="sum"><tr><td>Shipping</td><td>${c.ship||'—'}</td></tr><tr><td>Billing</td><td>${c.bill||'—'}</td></tr></table></div>
+<h3 style="margin-top:20px">Submission history (${L.length})</h3><table><tr><th>ID</th><th>File</th><th>Type</th><th>Submitted</th><th>Status</th><th>Price</th></tr>${L.map(x=>`<tr><td>${x.id}</td><td>${x.file}</td><td>${NAMES[x.type]}</td><td>${x.date}</td><td>${tag(x.status)}</td><td>${money(x)}</td></tr>`).join('')}</table></div>`)},
 dash(){const q=S.subs.filter(s=>s.status==='quote'),d=S.subs.filter(s=>s.status==='done'||s.status==='nocharge');
 $(`<div class="row" style="justify-content:space-between"><h1>Welcome, ${S.user}</h1><button class="btn" onclick="go('upload')">+ Upload new artwork</button></div><p class="ex">Example data</p>
 <div class="two"><div class="card"><h3>Quotes awaiting payment (${q.length})</h3>${q.map(s=>`<p>${s.id} · ${NAMES[s.type]}<br><b>$${s.price}</b> <button class="btn s" onclick="go('pay','${s.id}')">Review & pay</button></p>`).join('')||'<p>None</p>'}</div>
@@ -80,8 +94,8 @@ files(){const d=S.subs.filter(s=>s.status==='done'||s.status==='nocharge');
 $(`<div class="card"><h1>Finished files</h1><p class="ex">Example data — download buttons are demo only</p><table><tr><th>ID</th><th>Original</th><th>Type</th><th>Files</th></tr>
 ${d.map(s=>`<tr><td>${s.id}</td><td>${s.file}</td><td>${NAMES[s.type]}</td><td>${(s.type==='vector'?['.ai','.eps','.svg','.pdf']:s.type==='emb'?['.emb','.dst']:['.ai','.pdf','.emb','.dst','cap .emb']).map(x=>`<button class="btn o s" onclick="alert('Demo: no file')">⬇ ${x}</button>`).join(' ')}</td></tr>`).join('')}</table></div>`)},
 admin(){$(`<div class="card"><h1>Admin — submissions</h1><p class="ex">Demo admin view · example data</p><table><tr><th>ID</th><th>Client</th><th>Customer file</th><th>Type</th><th>Status</th><th>Quote price</th><th>Actions</th></tr>
-${S.subs.map(s=>`<tr><td>${s.id}</td><td><b style="color:var(--navy);font-size:1rem">${s.client}</b><br><small>${s.company}</small></td><td>${s.file}<br><small>${s.size} · ${s.place}</small></td><td>${NAMES[s.type]}</td><td>${tag(s.status)}</td><td>${s.status==='review'?`<input id="p${s.id}" style="width:80px" value="${PRICES[s.type]}">`:money(s)}</td><td>${s.status==='review'?`<button class="btn s" style="background:#dff3e4;color:#1d6b35" onclick="adm('${s.id}',0)">Mark no charge</button> <button class="btn n s" onclick="adm('${s.id}',1)">Send quote</button>`:''}</td></tr>`).join('')}</table></div>`)}};
-function submitArt(){const n=1043+S.subs.length;S.subs.unshift({id:'A-'+n,client:S.user,company:'Example Company',file:'example-new-logo.png',type:S.sel,size:document.getElementById('sz').value||'—',place:document.getElementById('pl').value,notes:document.getElementById('nt').value||'—',status:'review',price:null,date:'Today'});go('status','A-'+n)}
+${S.subs.map(s=>`<tr><td>${s.id}</td><td><a href="#" onclick="go('client',encodeURIComponent('${s.client}'));return false" style="color:var(--navy);font-size:1rem;font-weight:700">${s.client}</a><br><small>${s.company}</small></td><td>${s.file}<br><small>${s.size} · ${s.place}</small></td><td>${NAMES[s.type]}</td><td>${tag(s.status)}</td><td>${s.status==='review'?`<input id="p${s.id}" style="width:80px" value="${PRICES[s.type]}">`:money(s)}</td><td>${s.status==='review'?`<button class="btn s" style="background:#dff3e4;color:#1d6b35" onclick="adm('${s.id}',0)">Mark no charge</button> <button class="btn n s" onclick="adm('${s.id}',1)">Send quote</button>`:''}</td></tr>`).join('')}</table></div>`)}};
+function submitArt(){const n=1043+S.subs.length;S.subs.unshift({id:'A-'+n,client:S.user,company:CL[S.user].company,file:'example-new-logo.png',type:S.sel,size:document.getElementById('sz').value||'—',place:document.getElementById('pl').value,notes:document.getElementById('nt').value||'—',status:'review',price:null,date:'Today'});go('status','A-'+n)}
 function adm(id,q){const s=S.subs.find(x=>x.id===id);if(q){s.status='quote';s.price=+document.getElementById('p'+id).value}else{s.status='nocharge';s.price=0}V.admin()}
-const [h,a]=location.hash.slice(1).split('/');if(h&&h!=='signin'&&h!=='admin')S.user='Sample Customer';go(h||'signin',a);
+const [h,a]=location.hash.slice(1).split('/');if(h&&!['signin','admin','client'].includes(h)){S.user='Example: Sample Customer';CL[S.user]={company:'Example Company LLC',email:'sample@example.com',phone:'(555) 010-0000',ship:'123 Example St, Sampletown, CA 95000',bill:'Same as shipping'}};go(h||'signin',a);
 </script></body></html>
