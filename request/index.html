@@ -34,6 +34,7 @@ footer.site{background:var(--ink);color:#cfd5e3;padding:56px 0 28px;font-size:.9
 @media(max-width:900px){.nav ul{display:none}.hero .wrap,.gifts .wrap{grid-template-columns:1fr}.patch{max-width:280px;margin:0 auto}.tiles{grid-template-columns:repeat(3,1fr)}.trust{grid-template-columns:1fr 1fr}.steps,.split,.quotes{grid-template-columns:1fr}footer.site .cols{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.tiles{grid-template-columns:repeat(2,1fr);gap:14px}.news form{flex-direction:column}.nav .btn{padding:10px 16px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.rv{border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:14px 16px;margin:12px 0}.rv h3{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px;font-size:1.05rem;color:var(--blue)}.rv h3 a{font-size:.9rem;font-weight:700;color:var(--blue)}.rv dl{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:4px 12px;margin:0}.rv dt{color:#4a5266}.rv dd{margin:0;font-weight:600;overflow-wrap:anywhere}@media(max-width:520px){.rv dl{grid-template-columns:1fr}.rv dd{margin-bottom:6px}}
 </style><style>
 [hidden]{display:none!important}.form{max-width:760px;margin:0 auto}.prog{display:flex;gap:6px;margin:0 0 28px}.prog i{flex:1;height:8px;border-radius:9px;background:var(--line)}.prog i.on{background:var(--blue)}
 fieldset{border:0;padding:0;margin:0}fieldset[hidden]{display:none}legend{font-family:Futura,sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:6px}
@@ -46,7 +47,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
 </style></head><body><div class="bar">Personalized gifts in 24-48 hours, with no minimum. Call 408-262-7727</div>
 <header><div class="wrap nav"><a class="logo" href="../">Logos <span>Etc</span></a><ul><li><a href="../#shop">Products</a></li><li><a href="../#gifts">Personalized Gifts</a></li><li><a href="../#stores">Custom Web Stores</a></li><li><a href="https://www.promoplace.com/logos-etc" target="_blank" rel="noopener">Bulk Orders</a></li><li><a href="#">Special Offers</a></li><li><a href="../#contact">Contact</a></li></ul><a class="btn" href="./">Request your store</a></div></header><main><section><div class="wrap form">
 <h1>Request your custom store</h1><p class="lede">Tell us about your team, school, company or event. We'll build your online store and send you a proof, usually within a few business days.</p>
-<div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
 <form id="f" action="https://formsubmit.co/c.logosetcetera@gmail.com" method="POST" novalidate>
 <input type="hidden" name="_subject" value="New custom store request - Logos Etc">
 <input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="true">
@@ -88,6 +89,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
 <div class="chips" style="margin-top:18px"><label><input type="checkbox" name="Logo uploaded" value="Yes">I've uploaded my logo</label><label><input type="checkbox" name="Logo uploaded" value="Will send later">I'll send it later</label></div></fieldset>
 <fieldset data-step hidden><legend>5. Anything else?</legend>
 <label for="notes">Notes <small>(sizes, personalization, names/numbers, custom domain…)</small></label><textarea id="notes" name="Notes" rows="6"></textarea></fieldset>
+<fieldset data-step hidden><legend>6. Review your request</legend><p>Check your details below. Use Edit to change anything, then send your request.</p><div id="review"></div></fieldset>
 <p class="err" id="err" role="alert" hidden>Please fill in the required fields.</p>
 <div class="navb"><button type="button" class="btn ghost" id="back" hidden>Back</button><span></span><button type="button" class="btn" id="next">Next</button><button type="submit" class="btn" id="send" hidden>Send my request</button></div>
 </form></div></section></main>
@@ -101,5 +103,14 @@ function dlv(){const g=x=>document.getElementById(x),v=(document.querySelector('
 document.addEventListener('input',()=>{dur();dlv();document.getElementById('err').hidden=true});
 document.addEventListener('change',()=>{dur();dlv();document.getElementById('fundNote').hidden=(document.querySelector('[name="Fundraising store"]:checked')||{}).value!='Yes';tog('Store purpose','Other','purposeOtherW','purposeOther');tog('Products','Other','prodOtherW','prodOther')});
 function ok(){const bad=[...s[i].querySelectorAll('[required]')].filter(x=>!x.checkValidity());const pb=s[i].querySelectorAll('[name="Products"]');if(pb.length&&![...pb].some(x=>x.checked))bad.push(pb[0]);if(bad.length){E.textContent=bad.some(x=>x.validationMessage&&x.id=='close'&&x.value)?'The close date must be after the open date.':'Please fill in the required fields.';E.hidden=false;bad[0].focus();return false}return true}
-N.onclick=()=>{if(ok()){i++;show()}};B.onclick=()=>{i--;show()};
+N.onclick=()=>{if(ok()){i++;if(i==s.length-1)rv();show()}};
+function rv(){const f=new FormData(document.querySelector('form')),g=k=>f.getAll(k).filter(Boolean).join(', ')||'—',e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pur=g('Store purpose')+(f.get('Store purpose (other)')?': '+f.get('Store purpose (other)'):''),prod=g('Products')+(f.get('Products (other)')?' ('+f.get('Products (other)')+')':'');
+let dur=g('Store duration');if(f.get('Store open date'))dur+=`, ${f.get('Store open date')} to ${f.get('Store close date')}`;if(f.get('Target launch date'))dur+=`, target launch ${f.get('Target launch date')}`;
+let del=g('Delivery option');
+const sec=(t,k,rows)=>`<div class="rv"><h3>${t}<a href="#" data-edit="${k}">Edit</a></h3><dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${e(b)}</dd>`).join('')}</dl></div>`;
+const dr=[['Store duration',dur],['Needed-by date',g('Needed-by date')],['Delivery option',del]];if(f.get('Dedicated location address'))dr.push(['Ship to',f.get('Dedicated location address')]);if(f.get('Receiving contact and notes'))dr.push(['Receiving contact',f.get('Receiving contact and notes')]);dr.push(['Fundraising store',g('Fundraising store')]);
+document.getElementById('review').innerHTML=sec('Contact',0,[['Name',g('Contact name')],['Email',g('email')],['Phone',g('Phone')],['Organization',g('Organization')]])+sec('Your store',1,[['Store purpose',pur],['Audience and goal',g('Audience and goal')],['Products',prod],['Decoration',g('Decoration')],['Colors',g('Colors')]])+sec('Dates and delivery',2,dr)+sec('Logo',3,[['Logo',f.get('Logo uploaded')=='Yes'?'Uploaded through Dropbox':f.get('Logo uploaded')?'Will send later':'Not confirmed yet']])+sec('Notes',4,[['Notes',g('Notes')]])}
+document.addEventListener('click',ev=>{const a=ev.target.closest('[data-edit]');if(a){ev.preventDefault();i=+a.dataset.edit;show()}});
+B.onclick=()=>{i--;show()};
 </script></body></html>
