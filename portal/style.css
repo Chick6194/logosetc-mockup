@@ -29,3 +29,4 @@ footer{background:var(--dark);color:#aab6c7;text-align:center;padding:20px;font-
 .svc{font-weight:700;color:#C9A227;letter-spacing:.02em;margin:.4em 0 1em}
 .freebar{display:block;text-align:center;background:#C9A227;color:#0B1F3A;font-weight:800;font-size:1.35rem;padding:16px 12px;text-decoration:none;text-transform:uppercase;letter-spacing:.04em}
 .freebar:hover{background:#d9b43a}
+.capq{background:#fbf4dc;border:2px solid #C9A227;border-radius:10px;padding:12px 14px;margin:10px 0}.capq label{display:block;margin-top:6px}
