@@ -24,12 +24,19 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;bor
 .steps{display:flex;gap:8px;margin:16px 0}.steps div{flex:1;padding:10px;border-radius:8px;background:#eef1f4;text-align:center;font-size:.85rem;font-weight:600;color:var(--mut)}.steps .on{background:var(--navy);color:#fff}
 .stripe{background:#635bff;color:#fff}.sum td{border:0;padding:6px 0}.hide{display:none}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.grid,.two{grid-template-columns:1fr}.nav nav{display:none}}
+
+.hero{position:relative;max-width:1100px;margin:24px auto 0;border-radius:14px;overflow:hidden;background:var(--dark)}.hero img{display:block;width:100%;height:auto}
+.hero .tx{position:absolute;left:0;top:0;bottom:0;width:45%;display:flex;flex-direction:column;justify-content:center;padding:0 4%;color:#fff}
+.hero h1{color:#fff;font-size:clamp(1.8rem,4vw,3.2rem)}.hero h1 span{color:var(--gold)}.hero p{margin:0;font-size:clamp(.9rem,1.4vw,1.1rem);color:#dfe5ee}
+@media(max-width:700px){.hero{margin:16px}.hero .tx{width:100%;bottom:auto;height:40%;padding:0 7%}}
 footer{text-align:center;color:var(--mut);font-size:.85rem;padding:30px}
 </style></head><body>
 <div class="demo">DEMO MOCKUP — not a real site. No real accounts, uploads, or payments. All data is example data.</div>
 <header><div class="nav"><a class="logo" href="#" onclick="go('dash')">Logos <span>Etc</span> <small style="font-size:.6em;font-weight:600;color:#cfd8e3">Artwork</small></a>
 <nav id="mainnav" class="hide"><a class="l" onclick="go('dash')">Dashboard</a><a class="l" onclick="go('upload')">New artwork</a><a class="l" onclick="go('files')">Finished files</a><a class="l" onclick="go('account')">My account</a><a class="l" onclick="go('admin')">Admin (demo)</a></nav>
 <a class="l hide" id="signout" style="color:#fff;cursor:pointer" onclick="signOut()">Sign out</a></div></header>
+<section class="hero" id="hero"><picture><source media="(max-width:700px)" srcset="img/hero-square.jpg"><img src="img/hero.jpg" alt="Logo artwork turned into vector and embroidery files"></picture>
+<div class="tx"><h1>From sketch <span>to stitch</span></h1><p>Vector art $15 · Embroidery digitizing $35 · Bundle includes a free cap logo</p></div></section>
 <main id="app"></main>
 <footer>Logos Etc · 192 S Hillview Dr, Milpitas, CA · Mockup for review only</footer>
 <script>
@@ -48,7 +55,7 @@ const TAG={review:['Under review','t-rev'],quote:['Quote ready','t-q'],nocharge:
 const $=h=>document.getElementById('app').innerHTML=h;
 const tag=s=>`<span class="tag ${TAG[s][1]}">${TAG[s][0]}</span>`;
 const money=s=>s.price===null?'—':s.price===0?'$0 (no charge)':'$'+s.price;
-function go(v,a){if(!S.user&&!['signin','admin','client'].includes(v)){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
+function go(v,a){if(!S.user&&!['signin','admin','client'].includes(v)){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);document.getElementById('hero').style.display=['signin','dash','upload'].includes(v)?'':'none';location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
 function mkUser(c){const g=i=>(document.getElementById(i)||{}).value;S.user=g('nm')||'Example: Sample Customer';if(!CL[S.user])CL[S.user]={company:c?g('co'):'Example Company LLC',email:g('em'),phone:c?g('ph'):'(555) 010-0000',ship:c?g('sh'):'123 Example St, Sampletown, CA 95000',bill:c?g('bi'):'Same as shipping'};go('dash')}
 function saveAcct(){const c=CL[S.user];['company','email','phone','ship','bill'].forEach(k=>c[k]=document.getElementById('a_'+k).value);const n=document.getElementById('a_name').value;if(n!==S.user){CL[n]=c;S.subs.forEach(x=>{if(x.client===S.user)x.client=n});S.user=n}S.subs.forEach(x=>{if(x.client===S.user)x.company=c.company});document.getElementById('sv').textContent='Saved (demo only)'}
 function signOut(){S.user=null;go('signin')}
