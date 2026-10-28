@@ -26,19 +26,25 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;bor
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.grid,.two{grid-template-columns:1fr}.nav nav{display:none}}
 
 .hero{position:relative;max-width:1100px;margin:24px auto 0;border-radius:14px;overflow:hidden;background:var(--dark)}.hero img{display:block;width:100%;height:auto}
-.hero .tx{position:absolute;left:0;top:0;bottom:0;width:45%;display:flex;flex-direction:column;justify-content:center;padding:0 4%;color:#fff}
+.hero .tx{position:absolute;left:0;top:0;bottom:0;width:40%;display:flex;flex-direction:column;justify-content:center;padding:0 4%;color:#fff}
 .hero h1{color:#fff;font-size:clamp(1.8rem,4vw,3.2rem)}.hero h1 span{color:var(--gold)}.hero p{margin:0;font-size:clamp(.9rem,1.4vw,1.1rem);color:#dfe5ee}
-@media(max-width:700px){.hero{margin:16px}.hero .tx{width:100%;bottom:auto;height:40%;padding:0 7%}}
+@media(max-width:700px){.hero{margin:16px}.hero .tx{width:100%;bottom:auto;height:35%;padding:0 7%}}
 .orig{display:flex;gap:16px;align-items:center;border:1px solid #e3e8ee;border-radius:12px;padding:14px;background:#fafbfc}.orig img{width:120px;height:120px;object-fit:contain;border-radius:8px;border:1px solid #dde3ea;background:#fff}
 .ba{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ba figure{margin:0;border:1px solid #e3e8ee;border-radius:12px;padding:12px;background:#fff;text-align:center}.ba img{width:100%;max-width:220px;aspect-ratio:1;object-fit:contain;border-radius:8px}.ba figcaption{font-weight:700;color:var(--navy);margin-top:6px}
+.tiles{max-width:1100px;margin:18px auto 0;padding:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.tile{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08);text-decoration:none;color:var(--ink);transition:transform .15s}.tile:hover{transform:translateY(-3px)}.tile img{display:block;width:100%;aspect-ratio:1;object-fit:cover}.tile div{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}.tile b{color:var(--navy)}.tile span{color:var(--gold);font-weight:800}
+@media(max-width:700px){.tiles{grid-template-columns:1fr}}
 footer{text-align:center;color:var(--mut);font-size:.85rem;padding:30px}
 </style></head><body>
 <div class="demo">DEMO MOCKUP — not a real site. No real accounts, uploads, or payments. All data is example data.</div>
-<header><div class="nav"><a class="logo" href="#" onclick="go('dash')" style="display:flex;align-items:center;gap:10px"><img src="img/logo.png" srcset="img/logo.png 1x, img/logo@2x.png 2x" alt="Logos Etc" width="48" height="48"> <small style="font-size:.6em;font-weight:600;color:#cfd8e3">Artwork</small></a>
+<header><div class="nav"><a class="logo" href="#" onclick="go('dash')" style="display:flex;align-items:center;gap:10px"><img src="img/logo.png?v=20261028d" srcset="img/logo.png?v=20261028d 1x, img/logo@2x.png?v=20261028d 2x" alt="Logos Etc" width="48" height="48"> <small style="font-size:.6em;font-weight:600;color:#cfd8e3">Artwork</small></a>
 <nav id="mainnav" class="hide"><a class="l" onclick="go('dash')">Dashboard</a><a class="l" onclick="go('upload')">New artwork</a><a class="l" onclick="go('files')">Finished files</a><a class="l" onclick="go('account')">My account</a><a class="l" onclick="go('admin')">Admin (demo)</a></nav>
 <a class="l hide" id="signout" style="color:#fff;cursor:pointer" onclick="signOut()">Sign out</a></div></header>
-<section class="hero" id="hero"><picture><source media="(max-width:700px)" srcset="img/hero-square.jpg?v=5be5126"><img src="img/hero.jpg?v=5be5126" alt="Logo artwork turned into vector and embroidery files"></picture>
+<section class="hero" id="hero"><picture><source media="(max-width:700px)" srcset="img/hero-square.jpg?v=20261028d"><img src="img/hero.jpg?v=20261028d" alt="Logo artwork turned into vector and embroidery files"></picture>
 <div class="tx"><h1>From sketch <span>to stitch</span></h1><p>Vector art $15 · Embroidery digitizing $35 · Bundle includes a free cap logo</p></div></section>
+<section class="tiles" id="tiles">
+<a class="tile" href="#" onclick="tileGo('vector');return false"><img src="img/tile-vector.jpg?v=20261028d" alt="Vector artwork" loading="lazy"><div><b>Vector artwork</b><span>$15</span></div></a>
+<a class="tile" href="#" onclick="tileGo('emb');return false"><img src="img/tile-embroidery.jpg?v=20261028d" alt="Embroidery digitizing" loading="lazy"><div><b>Embroidery digitizing</b><span>$35</span></div></a>
+<a class="tile" href="#" onclick="tileGo('bundle');return false"><img src="img/tile-bundle.jpg?v=20261028d" alt="Bundle" loading="lazy"><div><b>Bundle</b><span>$50 + free cap logo</span></div></a></section>
 <main id="app"></main>
 <footer>Logos Etc · 192 S Hillview Dr, Milpitas, CA · Mockup for review only</footer>
 <script>
@@ -54,18 +60,19 @@ let S={user:null,sel:'vector',subs:[
  {id:'A-1031',client:'Example: Priya Patel',company:'Sample Realty Group',file:'example-realty-mark.ai',type:'vector',size:'4" wide',place:'Left chest',notes:'Example: already clean vector',status:'nocharge',price:0,date:'Oct 20'},
  {id:'A-1025',client:'Example: Sam Carter',company:'Sample Fitness Studio',file:'example-gym-logo.png',type:'bundle',size:'3" + cap',place:'Chest + cap front',notes:'Example',status:'done',price:50,date:'Oct 15'}]};
 const TAG={review:['Under review','t-rev'],quote:['Quote ready','t-q'],nocharge:['No charge — approved','t-nc'],paid:['Paid — in progress','t-pd'],done:['Finished','t-dn']};
-const ORIG='img/example-original.jpg';const after=t=>t==='emb'?'img/example-stitch.svg':'img/example-vector.svg';
+const ORIG='img/example-original.jpg?v=20261028d';const after=t=>t==='emb'?'img/example-stitch.svg?v=20261028d':'img/example-vector.svg?v=20261028d';
 const origPanel=s=>`<h3 style="margin-top:20px">Original upload</h3><div class="orig"><img src="${s.img||ORIG}" alt="Original upload"><div><b>${s.file}</b><br><small class="ex">${s.fsize||'412 KB'} · example image</small><br><br><button class="btn o s" onclick="alert('Demo: no file')">⬇ Download original</button></div></div>`;
 const isDone=s=>s.status==='done'||s.status==='nocharge';
 const baPanel=s=>`<h3 style="margin-top:20px">Before / After <span class="ex">example images</span></h3><div class="ba"><figure><img src="${s.img||ORIG}" alt="Before"><figcaption>Before — original upload</figcaption></figure><figure><img src="${after(s.type)}" alt="After"><figcaption>After — ${s.type==='emb'?'stitched EMB preview':s.type==='bundle'?'clean vector (EMB + cap also included)':'clean vector'}</figcaption></figure></div>`;
 const $=h=>document.getElementById('app').innerHTML=h;
 const tag=s=>`<span class="tag ${TAG[s][1]}">${TAG[s][0]}</span>`;
 const money=s=>s.price===null?'—':s.price===0?'$0 (no charge)':'$'+s.price;
-function go(v,a){if(!S.user&&!['signin','admin','client','asub'].includes(v)){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);document.getElementById('hero').style.display=['signin','dash','upload'].includes(v)?'':'none';location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
-function mkUser(c){const g=i=>(document.getElementById(i)||{}).value;S.user=g('nm')||'Example: Sample Customer';if(!CL[S.user])CL[S.user]={company:c?g('co'):'Example Company LLC',email:g('em'),phone:c?g('ph'):'(555) 010-0000',ship:c?g('sh'):'123 Example St, Sampletown, CA 95000',bill:c?g('bi'):'Same as shipping'};go('dash')}
+function go(v,a){if(!S.user&&!['signin','admin','client','asub'].includes(v)){v='signin'}document.getElementById('mainnav').classList.toggle('hide',!S.user);document.getElementById('signout').classList.toggle('hide',!S.user);document.getElementById('hero').style.display=['signin','dash','upload'].includes(v)?'':'none';document.getElementById('tiles').style.display=['signin','dash'].includes(v)?'':'none';location.hash=v+(a?'/'+a:'');window.scrollTo(0,0);V[v](a)}
+function mkUser(c){const g=i=>(document.getElementById(i)||{}).value;S.user=g('nm')||'Example: Sample Customer';if(!CL[S.user])CL[S.user]={company:c?g('co'):'Example Company LLC',email:g('em'),phone:c?g('ph'):'(555) 010-0000',ship:c?g('sh'):'123 Example St, Sampletown, CA 95000',bill:c?g('bi'):'Same as shipping'};go(S.next||'dash');S.next=null}
 function saveAcct(){const c=CL[S.user];['company','email','phone','ship','bill'].forEach(k=>c[k]=document.getElementById('a_'+k).value);const n=document.getElementById('a_name').value;if(n!==S.user){CL[n]=c;S.subs.forEach(x=>{if(x.client===S.user)x.client=n});S.user=n}S.subs.forEach(x=>{if(x.client===S.user)x.company=c.company});document.getElementById('sv').textContent='Saved (demo only)'}
 function pick(f){if(!f)return;S.pick={name:f.name,size:(f.size/1024).toFixed(0)+' KB',url:f.type.startsWith('image/')?URL.createObjectURL(f):ORIG};showPick(S.pick)}
 function showPick(p){document.getElementById('pv').innerHTML=`<div class="orig" style="margin-top:10px"><img src="${p.url}" alt="Preview"><div><b>${p.name}</b><br><small class="ex">${p.size} · preview of your original</small><br><a href="#" onclick="S.pick=null;document.getElementById('pv').innerHTML='';return false">Remove</a></div></div>`}
+function tileGo(k){S.sel=k;if(S.user)go('upload');else{S.next='upload';go('signin')}}
 function signOut(){S.user=null;go('signin')}
 const V={
 signin(a){const F=(id,l,v)=>`<label>${l}</label><input id="${id}" value="${v}">`;$(`<div class="card" style="max-width:520px;margin:30px auto"><h1>Sign in or create account</h1><p style="color:var(--mut)">Your uploads, quotes and finished files in one place.</p>
