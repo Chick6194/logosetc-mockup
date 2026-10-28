@@ -1,0 +1,89 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Request your store | Logos Etc</title><style>
+:root{--ink:#1d2230;--blue:#1f4fd8;--blue-d:#173ca6;--gold:#f2b705;--paper:#ffffff;--mist:#eef2fa;--line:#d5dbe8}
+*{box-sizing:border-box}body{margin:0;font:17px/1.55 "Avenir Next","Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper)}
+a{color:var(--blue)}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Futura","Avenir Next Condensed","Trebuchet MS",sans-serif;line-height:1.1;margin:0 0 .4em}
+h1{font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:800;letter-spacing:-.01em}h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:800}h3{font-size:1.2rem}
+.bar{background:var(--ink);color:#fff;font-size:.9rem;text-align:center;padding:8px}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:5}
+.nav{display:flex;align-items:center;gap:28px;height:72px}.logo{font-weight:900;font-size:1.5rem;color:var(--ink);text-decoration:none}.logo span{color:var(--blue)}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;flex:1}.nav ul a{color:var(--ink);text-decoration:none;font-weight:600}
+.btn{display:inline-block;background:var(--blue);color:#fff;font-weight:700;text-decoration:none;padding:14px 26px;border-radius:999px;border:0;font-size:1rem;cursor:pointer}.btn:hover{background:var(--blue-d)}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.hero{background:var(--mist);padding:64px 0}.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+.hero p{font-size:1.2rem;max-width:34em}.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+.patch{aspect-ratio:1;border-radius:50%;background:var(--blue);display:grid;place-items:center;position:relative;box-shadow:0 0 0 14px var(--mist),0 0 0 16px var(--blue)}
+.patch::before{content:"";position:absolute;inset:16px;border:4px dashed var(--gold);border-radius:50%}
+.patch div{color:#fff;text-align:center;font-family:Futura,sans-serif;font-weight:800;font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1.05}.patch small{display:block;font-size:.4em;font-weight:600;margin-top:10px;color:var(--gold)}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:28px 0;border-bottom:1px solid var(--line)}.trust div{font-weight:700}.trust span{display:block;font-weight:400;font-size:.92rem;color:#4a5266}
+section{padding:72px 0}.lede{max-width:40em;margin-bottom:32px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}.tile{text-decoration:none;color:var(--ink);text-align:center;font-weight:700;font-size:1.15rem}
+.tile .img{aspect-ratio:1;border-radius:16px;background:#fff;overflow:hidden;display:grid;place-items:center;font-size:2.6rem;margin-bottom:10px;border:1px solid var(--line)}.tile .img img{width:92%;height:92%;object-fit:contain}.gimg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}.gimg img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:12px}.tile:hover .img{border-color:var(--blue)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;counter-reset:s}.step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--gold);font-weight:900;font-size:1.3rem;margin-bottom:14px}
+.gifts{background:var(--gold)}.gifts .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.speed{display:grid;grid-template-columns:1fr 1fr;gap:16px}.speed div{background:#fff;border-radius:12px;padding:22px}.speed b{display:block;font-size:2rem;font-family:Futura,sans-serif}
+.split{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.card{border:2px solid var(--ink);border-radius:14px;padding:28px;display:flex;flex-direction:column}.card p{flex:1}
+.card.volume{background:var(--ink);color:#fff}.card.volume .btn{background:var(--gold);color:var(--ink)}
+.reviews{background:var(--mist)}.note{display:inline-block;background:#fff3c4;border:1px dashed #b08600;padding:4px 10px;border-radius:6px;font-size:.85rem;margin-bottom:18px}
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}blockquote{margin:0;background:#fff;padding:24px;border-radius:12px}blockquote footer{margin-top:10px;color:#4a5266;font-size:.9rem}
+.news{background:var(--blue);color:#fff;text-align:center}.news form{display:flex;gap:10px;max-width:480px;margin:20px auto 0}.news input{flex:1;padding:14px 18px;border-radius:999px;border:0;font-size:1rem}.news .btn{background:var(--gold);color:var(--ink)}
+.brandsec{padding-top:24px}.brands{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.brands li{border:1px solid var(--line);border-radius:10px;padding:16px 8px;text-align:center;font-weight:700;color:#3d4457;font-size:.98rem}@media(max-width:900px){.brands{grid-template-columns:repeat(3,1fr)}}@media(max-width:520px){.brands{grid-template-columns:repeat(2,1fr)}}
+footer.site{background:var(--ink);color:#cfd5e3;padding:56px 0 28px;font-size:.95rem}footer.site a{color:#fff;text-decoration:none}footer.site .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}footer.site ul{list-style:none;padding:0;margin:0;line-height:2}footer.site h3{color:#fff;font-size:1rem}
+.legal{border-top:1px solid #39405a;margin-top:36px;padding-top:18px;font-size:.85rem}
+@media(max-width:900px){.nav ul{display:none}.hero .wrap,.gifts .wrap{grid-template-columns:1fr}.patch{max-width:280px;margin:0 auto}.tiles{grid-template-columns:repeat(3,1fr)}.trust{grid-template-columns:1fr 1fr}.steps,.split,.quotes{grid-template-columns:1fr}footer.site .cols{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.tiles{grid-template-columns:repeat(2,1fr);gap:14px}.news form{flex-direction:column}.nav .btn{padding:10px 16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style><style>
+.form{max-width:760px;margin:0 auto}.prog{display:flex;gap:6px;margin:0 0 28px}.prog i{flex:1;height:8px;border-radius:9px;background:var(--line)}.prog i.on{background:var(--blue)}
+fieldset{border:0;padding:0;margin:0}fieldset[hidden]{display:none}legend{font-family:Futura,sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:6px}
+label{display:block;font-weight:700;margin:18px 0 6px}label small{font-weight:400;color:#4a5266}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],select,textarea{width:100%;padding:13px 14px;border:2px solid var(--line);border-radius:10px;font:inherit}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
+.chips{display:flex;flex-wrap:wrap;gap:10px}.chips label{margin:0;font-weight:600;border:2px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer}.chips input{margin-right:6px}.chips label:has(input:checked){border-color:var(--blue);background:var(--mist)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}@media(max-width:600px){.two{grid-template-columns:1fr}}
+.navb{display:flex;justify-content:space-between;margin-top:32px}.upload{background:var(--mist);border-radius:14px;padding:24px;margin-top:14px}.err{color:#b00020;font-weight:700;margin-top:12px}
+</style></head><body><div class="bar">Personalized gifts in 24–48 hours, with no minimum. Call 408-262-7727</div>
+<header><div class="wrap nav"><a class="logo" href="../">Logos <span>Etc</span></a><ul><li><a href="../#shop">Products</a></li><li><a href="../#gifts">Personalized Gifts</a></li><li><a href="../#stores">Custom Web Stores</a></li></ul><a class="btn" href="./">Request your store</a></div></header><main><section><div class="wrap form">
+<h1>Request your custom store</h1><p class="lede">Tell us about your team, school, company or event. We'll build your online store and send you a proof, usually within a few business days.</p>
+<div class="prog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+<form id="f" action="https://formsubmit.co/c.logosetcetera@gmail.com" method="POST" novalidate>
+<input type="hidden" name="_subject" value="New custom store request - Logos Etc">
+<input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="true">
+<input type="hidden" name="_next" value="https://chick6194.github.io/logosetc-mockup/request/thanks/">
+<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<fieldset data-step><legend>1. About you</legend>
+<label for="name">Contact name</label><input type="text" id="name" name="Contact name" required autocomplete="name">
+<div class="two"><div><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+<div><label for="phone">Phone</label><input type="tel" id="phone" name="Phone" required autocomplete="tel"></div></div>
+<label for="org">Organization or team name</label><input type="text" id="org" name="Organization" required></fieldset>
+<fieldset data-step hidden><legend>2. Your store</legend>
+<label>Store type</label><div class="chips">
+<label><input type="radio" name="Store type" value="Team or fundraiser" required>Team or fundraiser</label><label><input type="radio" name="Store type" value="Company">Company</label><label><input type="radio" name="Store type" value="School">School</label><label><input type="radio" name="Store type" value="Event">Event</label><label><input type="radio" name="Store type" value="Personal gift">Personal gift</label></div>
+<label>Products wanted <small>(pick any)</small></label><div class="chips">
+<label><input type="checkbox" name="Products" value="T-shirts">T-shirts</label><label><input type="checkbox" name="Products" value="Hoodies">Hoodies</label><label><input type="checkbox" name="Products" value="Polos">Polos</label><label><input type="checkbox" name="Products" value="Hats">Hats</label><label><input type="checkbox" name="Products" value="Jackets">Jackets</label><label><input type="checkbox" name="Products" value="Bags">Bags</label><label><input type="checkbox" name="Products" value="Drinkware">Drinkware</label><label><input type="checkbox" name="Products" value="Blankets">Blankets</label><label><input type="checkbox" name="Products" value="Other">Other</label></div>
+<label>Decoration</label><div class="chips"><label><input type="radio" name="Decoration" value="Embroidery" required>Embroidery</label><label><input type="radio" name="Decoration" value="Print">Print</label><label><input type="radio" name="Decoration" value="Both / not sure">Both / not sure</label></div>
+<div class="two"><div><label for="qty">Quantity estimate</label><select id="qty" name="Quantity estimate" required><option value="">Choose…</option><option>1–24</option><option>25–49</option><option>50–99</option><option>100–249</option><option>250+</option><option>Not sure</option></select></div>
+<div><label for="colors">Colors <small>(brand or garment)</small></label><input type="text" id="colors" name="Colors" placeholder="e.g. navy and gold"></div></div></fieldset>
+<fieldset data-step hidden><legend>3. Dates & delivery</legend>
+<div class="two"><div><label for="open">Store opens</label><input type="date" id="open" name="Store open date"></div><div><label for="close">Store closes</label><input type="date" id="close" name="Store close date"></div></div>
+<label for="need">Or: needed-by date</label><input type="date" id="need" name="Needed-by date">
+<label>Shipping or pickup</label><div class="chips"><label><input type="radio" name="Fulfillment" value="Ship to each buyer" required>Ship to each buyer</label><label><input type="radio" name="Fulfillment" value="Ship together to one address">Ship together to one address</label><label><input type="radio" name="Fulfillment" value="Pickup">Pickup</label></div>
+<label for="goal">Fundraiser goal <small>(optional)</small></label><input type="text" id="goal" name="Fundraiser goal" placeholder="e.g. $1,500 or $5 per item"></fieldset>
+<fieldset data-step hidden><legend>4. Upload your logo</legend>
+<div class="upload"><p><b>Send us your logo through our secure Dropbox upload page.</b> Vector files (AI, EPS, SVG, PDF), a high-resolution PNG, or embroidery files (EMB/DST) are best.</p>
+<p><b>Please name the file after your organization</b>, for example <code>LincolnHighSoccer-logo.png</code>, so we can match it to this request.</p>
+<a class="btn" href="https://www.dropbox.com/request/s4og7fial4lfedtlgt9j" target="_blank" rel="noopener">Upload your logo ↗</a></div>
+<label class="chips" style="margin-top:18px"><label><input type="checkbox" name="Logo uploaded" value="Yes">I've uploaded my logo</label><label><input type="checkbox" name="Logo uploaded" value="Will send later">I'll send it later</label></label></fieldset>
+<fieldset data-step hidden><legend>5. Anything else?</legend>
+<label for="notes">Notes <small>(sizes, personalization, names/numbers, custom domain…)</small></label><textarea id="notes" name="Notes" rows="6"></textarea></fieldset>
+<p class="err" id="err" role="alert" hidden>Please fill in the required fields.</p>
+<div class="navb"><button type="button" class="btn ghost" id="back" hidden>Back</button><span></span><button type="button" class="btn" id="next">Next</button><button type="submit" class="btn" id="send" hidden>Send my request</button></div>
+</form></div></section></main>
+<script>
+const s=[...document.querySelectorAll('[data-step]')],bars=[...document.querySelectorAll('.prog i')];let i=0;
+const B=back,N=next,S=send,E=err;
+function show(){s.forEach((f,k)=>f.hidden=k!==i);bars.forEach((b,k)=>b.classList.toggle('on',k<=i));B.hidden=i==0;N.hidden=i==s.length-1;S.hidden=i!=s.length-1;E.hidden=true;scrollTo(0,0)}
+function ok(){const bad=[...s[i].querySelectorAll('[required]')].filter(x=>!x.checkValidity());if(bad.length){E.hidden=false;bad[0].focus();return false}return true}
+N.onclick=()=>{if(ok()){i++;show()}};B.onclick=()=>{i--;show()};
+</script></body></html>
