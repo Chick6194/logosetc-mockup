@@ -78,7 +78,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
 <div class="two"><div><label for="pcity">City</label><input type="text" id="pcity" autocomplete="address-level2" disabled></div><div><div class="two"><div><label for="pstate">State</label><input type="text" id="pstate" maxlength="2" autocomplete="address-level1" disabled></div><div><label for="pzip">ZIP</label><input type="text" id="pzip" inputmode="numeric" pattern="[0-9]{5}(-[0-9]{4})?" autocomplete="postal-code" disabled></div></div></div></div>
 <label for="pnote">Receiving contact and notes <small>(optional)</small></label><input type="text" id="pnote" name="Receiving contact and notes" disabled>
 <input type="hidden" id="paddr" name="Dedicated location address" disabled></div>
-<label for="goal">Fundraiser goal <small>(optional)</small></label><input type="text" id="goal" name="Fundraiser goal" placeholder="e.g. $1,500 or $5 per item"></fieldset>
+<label>Is this a fundraising store?</label><div class="chips"><label><input type="radio" name="Fundraising store" value="Yes" required>Yes</label><label><input type="radio" name="Fundraising store" value="No">No</label></div>
+<p id="fundNote" hidden>Great! We'll set up your fundraiser details, like your goal, when we build your store and turn on the fundraiser feature.</p>
+</fieldset>
 <fieldset data-step hidden><legend>4. Upload your logo</legend>
 <div class="upload"><p><b>Send us your logo through our secure Dropbox upload page.</b> Vector files (AI, EPS, SVG, PDF), a high-resolution PNG, or embroidery files (EMB/DST) are best.</p>
 <p><b>Please name the file after your organization</b>, for example <code>LincolnHighSoccer-logo.png</code>, so we can match it to this request.</p>
@@ -97,7 +99,7 @@ function tog(n,v,w,t){const on=[...document.querySelectorAll(`[name="${n}"]`)].s
 function dur(){const g=x=>document.getElementById(x),open=g('open'),close=g('close'),launch=g('launch'),datesW=g('datesW'),launchW=g('launchW');const v=(document.querySelector('[name="Store duration"]:checked')||{}).value;const d=v=='Temporary'||v=='Seasonal',p=v=='Permanent';datesW.hidden=!d;launchW.hidden=!p;[open,close].forEach(x=>{x.disabled=!d;x.required=d});launch.disabled=!p;close.setCustomValidity(d&&open.value&&close.value&&close.value<=open.value?'The close date must be after the open date.':'')}
 function dlv(){const g=x=>document.getElementById(x),v=(document.querySelector('[name="Delivery option"]:checked')||{}).value,p=v=='Dedicated location';g('shipHelp').hidden=v!='Ship to each buyer';g('pickW').hidden=!p;['pname','pst','pcity','pstate','pzip'].forEach(k=>{g(k).disabled=!p;g(k).required=p});g('pnote').disabled=!p;g('paddr').disabled=!p;g('paddr').value=p?`${g('pname').value}, ${g('pst').value}, ${g('pcity').value}, ${g('pstate').value} ${g('pzip').value}`:''}
 document.addEventListener('input',()=>{dur();dlv();document.getElementById('err').hidden=true});
-document.addEventListener('change',()=>{dur();dlv();tog('Store purpose','Other','purposeOtherW','purposeOther');tog('Products','Other','prodOtherW','prodOther')});
+document.addEventListener('change',()=>{dur();dlv();document.getElementById('fundNote').hidden=(document.querySelector('[name="Fundraising store"]:checked')||{}).value!='Yes';tog('Store purpose','Other','purposeOtherW','purposeOther');tog('Products','Other','prodOtherW','prodOther')});
 function ok(){const bad=[...s[i].querySelectorAll('[required]')].filter(x=>!x.checkValidity());const pb=s[i].querySelectorAll('[name="Products"]');if(pb.length&&![...pb].some(x=>x.checked))bad.push(pb[0]);if(bad.length){E.textContent=bad.some(x=>x.validationMessage&&x.id=='close'&&x.value)?'The close date must be after the open date.':'Please fill in the required fields.';E.hidden=false;bad[0].focus();return false}return true}
 N.onclick=()=>{if(ok()){i++;show()}};B.onclick=()=>{i--;show()};
 </script></body></html>
