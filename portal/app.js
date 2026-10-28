@@ -1,5 +1,5 @@
 const S={get:k=>JSON.parse(localStorage.getItem('le_'+k)||'null'),set:(k,v)=>localStorage.setItem('le_'+k,JSON.stringify(v))};
-const SV={vector:['Vector artwork',15],digitizing:['Embroidery digitizing',35],bundle:['Bundle (vector + digitizing + free cap logo)',50]};
+const SV={vector:['Vector artwork — for printing or heat transfers',15],digitizing:['Embroidery digitizing',35],bundle:['Bundle (vector + digitizing + free cap logo)',50]};
 (()=>{const c=S.get('client'),a=document.getElementById('signin');if(c&&a)a.textContent=c.name.split(' ')[0]+' · Account';})();
 if(location.search.includes('demo')&&!S.get('orders')){S.set('client',{name:'Demo Customer',email:'demo@example.com',company:'Milpitas Little League',since:new Date().toLocaleDateString()});S.set('orders',[{id:'LE-1002',svc:'bundle',cap:'yes',file:'example-original.jpg',img:null,notes:'Navy and gold',status:4,date:new Date().toLocaleDateString()},{id:'LE-1001',svc:'vector',file:'example-original.jpg',img:null,notes:'',status:1,date:new Date().toLocaleDateString()}]);}
 
