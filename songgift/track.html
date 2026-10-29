@@ -1,0 +1,10 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Track your order — SongGift</title><link rel=stylesheet href=style.css></head><body>
+<nav><a class=logo href="index.html" style="text-decoration:none">Song<span>Gift</span></a><span><a href="track.html?demo=1">Track order</a> &nbsp; <a class=btn href="request.html">Start a song</a></span></nav>
+<section><div class=wrap style="max-width:640px"><h2>Track your order</h2>
+<form id=q class=card><label>Order number</label><input name=id placeholder="SG-1001"><br><br><button class=btn>Look up</button><p class=ph>Demo: open with ?demo=1 and try SG-1001 (delivered) or SG-1002.</p></form><div id=out></div></div></section>
+<footer><a href="terms.html">Terms (draft)</a> · Demo site<br>Powered by <a href="https://talenthubonline.com">TalentHub Online</a></footer><script src="app.js"></script>
+<script>function show(id){const o=load().find(x=>x.id.toLowerCase()===id.trim().toLowerCase());if(!o){out.innerHTML='<div class=card>Order not found.</div>';return}
+let h='<div class=card><h3>'+o.id+' — song for '+o.recipient+'</h3><p>'+o.occasion+' · '+o.genre+' · '+TIERS[o.tier][0]+(o.rush?' + Rush':'')+'</p><div class=steps>'+ST.map((s,i)=>'<span class="'+(i<=o.status?'on':'')+'">'+s+'</span>').join('')+'</div>';
+if(o.status==4&&o.song)h+='<h4>Your song is ready!</h4><audio controls src="'+o.song+'" style="width:100%"></audio><p><a class=btn href="'+o.song+'" download>Download song</a></p>';
+out.innerHTML=h+'</div>'}
+q.onsubmit=e=>{e.preventDefault();show(q.id.value)};const p=new URLSearchParams(location.search);if(p.get('id'))show(p.get('id'));else if(p.get('demo'))show('SG-1001')</script></body></html>

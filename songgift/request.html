@@ -1,0 +1,23 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Request a song — SongGift</title><link rel=stylesheet href=style.css></head><body>
+<nav><a class=logo href="index.html" style="text-decoration:none">Song<span>Gift</span></a><span><a href="track.html?demo=1">Track order</a> &nbsp; <a class=btn href="request.html">Start a song</a></span></nav>
+<section><div class=wrap style="max-width:640px"><h2>Request your song</h2>
+<form id=f class=card>
+<label>Recipient's name</label><input name=recipient required>
+<label>Occasion</label><select name=occasion><option>Birthday<option>Wedding<option>Anniversary<option>Other</select>
+<label>Story and details</label><textarea name=story rows=5 required placeholder="Names, memories, inside jokes..."></textarea>
+<label>Genre</label><select name=genre><option>Pop<option>Acoustic<option>Country<option>R&amp;B<option>Rock<option>Gospel</select>
+<label>Mood</label><select name=mood><option>Joyful<option>Romantic<option>Heartfelt<option>Funny<option>Nostalgic</select>
+<label>Deadline</label><input type=date name=deadline required>
+<label>Package</label><select name=tier><option value=basic>Basic — $59<option value=standard selected>Standard — $149<option value=premium>Premium — $249</select>
+<label><input type=checkbox name=rush style="width:auto"> Rush delivery +$50</label>
+<label><input type=checkbox name=lv style="width:auto"> Lyric video (price TBD)</label>
+<label>Your name</label><input name=name required><label>Email</label><input type=email name=email required>
+<label><input type=checkbox required style="width:auto"> I confirm I have the right to share the names and stories above, and agree to the <a href="terms.html">terms</a>.</label>
+<br><button class=btn>Continue to payment</button></form>
+<div id=pay class=card style="display:none"><h3>Checkout</h3><div class=demo><b>DEMO ONLY</b> — no real payment is taken and no card is charged.</div><p id=sum></p>
+<label>Card number</label><input value="4242 4242 4242 4242 (demo)" disabled><br><br><button class=btn id=pb>Pay (demo)</button></div>
+<div id=done class=card style="display:none"><h3>Thank you!</h3><p>Your order <b id=oid></b> is received.</p><a class=btn id=tl>Track your order</a></div>
+</div></section>
+<footer><a href="terms.html">Terms (draft)</a> · Demo site<br>Powered by <a href="https://talenthubonline.com">TalentHub Online</a></footer><script src="app.js"></script>
+<script>let o;f.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));d.rush=!!d.rush;d.total=TIERS[d.tier][1]+(d.rush?50:0);d.id='SG-'+(1000+load().length+1+Math.floor(Math.random()*900));d.status=0;o=d;sum.textContent=TIERS[d.tier][0]+(d.rush?' + Rush':'')+' — total $'+d.total+(d.lv?' (+ lyric video, TBD)':'');f.style.display='none';pay.style.display='block'};
+pb.onclick=()=>{const a=load();a.push(o);save(a);pay.style.display='none';done.style.display='block';oid.textContent=o.id;tl.href='track.html?id='+o.id}</script></body></html>
