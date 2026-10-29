@@ -4,7 +4,7 @@
 <form id=q class=card><label>Order number</label><input name=id placeholder="SG-1001"><br><br><button class=btn>Look up</button><p class=ph>Demo: open with ?demo=1 and try SG-1001 (delivered) or SG-1002.</p></form><div id=out></div></div></section>
 <footer><a href="terms.html">Terms (draft)</a> · Demo site<br>Powered by <a href="https://talenthubonline.com">TalentHub Online</a></footer><script src="app.js"></script>
 <script>function show(id){const o=load().find(x=>x.id.toLowerCase()===id.trim().toLowerCase());if(!o){out.innerHTML='<div class=card>Order not found.</div>';return}
-let h='<div class=card><h3>'+o.id+' — song for '+o.recipient+'</h3><p>'+o.occasion+' · '+o.genre+' · '+TIERS[o.tier][0]+(o.rush?' + Rush':'')+'</p><div class=steps>'+ST.map((s,i)=>'<span class="'+(i<=o.status?'on':'')+'">'+s+'</span>').join('')+'</div>';
-if(o.status==4&&o.song)h+='<h4>Your song is ready!</h4><audio controls src="'+o.song+'" style="width:100%"></audio><p><a class=btn href="'+o.song+'" download>Download song</a></p>';
+let h='<div class=card><h3>'+o.id+' — song for '+o.recipient+'</h3><p>'+o.occasion+' · '+o.genre+' · '+TIERS[o.tier][0]+rushTxt(o.rush)+(o.artist?' · '+o.artist:'')+'</p><div class=steps>'+ST.map((s,i)=>'<span class="'+(i<=o.status?'on':'')+'">'+s+'</span>').join('')+'</div>';
+if(o.status==4&&o.song)h+='<h4>Your song is ready!</h4><audio controls src="'+o.song+'" style="width:100%"></audio><p><a class=btn href="'+o.song+'" download>Download song</a> <a class=btn href="song.html?id='+o.id+'">Open shareable song page</a></p>';
 out.innerHTML=h+'</div>'}
 q.onsubmit=e=>{e.preventDefault();show(q.id.value)};const p=new URLSearchParams(location.search);if(p.get('id'))show(p.get('id'));else if(p.get('demo'))show('SG-1001')</script></body></html>
